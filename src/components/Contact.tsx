@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '../config/emailjs';
 
 const Contact = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,31 +17,52 @@ const Contact = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const fieldName = e.target.name === 'user_name' ? 'name' : 
+                     e.target.name === 'user_email' ? 'email' : 
+                     e.target.name;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [fieldName]: e.target.value,
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const result = await emailjs.sendForm(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        formRef.current!,
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
+
+      console.log('Email sent successfully:', result.text);
+      setSubmitStatus('success');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
     {
       icon: Mail,
       label: 'Email',
-      value: 'parthparmar5172@gmail.com',
-      href: 'mailto:parthparmar5172@gmail.com',
+      value: 'parth.3p2007@gmail.com',
+      href: 'mailto:parth.3p2007@gmail.com',
     },
     {
       icon: Phone,
@@ -151,16 +178,16 @@ const Contact = () => {
           </motion.div>
 
           <motion.div initial={{ x: 40, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ delay: 0.8, duration: 0.7 }}>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="user_name" className="block text-sm font-medium text-gray-700 mb-2">
                     Full Name
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="user_name"
+                    name="user_name"
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -169,13 +196,13 @@ const Contact = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="user_email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address
                   </label>
                   <input
                     type="email"
-                    id="email"
-                    name="email"
+                    id="user_email"
+                    name="user_email"
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -219,11 +246,27 @@ const Contact = () => {
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send size={20} className="mr-2" />
-                Send Message
+                {isSubmitting ? (
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                ) : (
+                  <>
+                    <Send size={20} className="mr-2" />
+                    Send Message
+                  </>
+                )}
               </button>
+              {submitStatus === 'success' && (
+                <p className="text-green-600 text-center mt-4">Message sent successfully!</p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-red-600 text-center mt-4">Failed to send message. Please try again later.</p>
+              )}
             </form>
           </motion.div>
         </motion.div>
