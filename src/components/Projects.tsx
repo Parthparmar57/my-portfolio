@@ -30,7 +30,24 @@ const Projects = () => {
       githubUrl: 'https://github.com/Parthparmar57/Ai_chatbot',
       date: '2025',
       category: 'AI ML',
-    }
+    },{
+      title: 'Password Generator',
+      description: 'Password Generator is a React-based web application that allows users to generate strong, random passwords. Users can customize the password length and choose whether to include numbers and special characters. The app uses React hooks for state management and offers a clean, responsive UI. Its a simple yet effective tool to enhance online security',
+      technologies: [ 'React'],
+      liveUrl: 'https://password-generator-react-3uui.vercel.app/',
+      githubUrl: 'https://github.com/Parthparmar57/password-generator-react',
+      date: '2025',
+      category: 'Frontend',
+    },
+    ,{
+      title: 'Real EState Website',
+      description: 'A sleek and responsive Real Estate website built with React and Tailwind CSS, designed to showcase property listings, customer testimonials, and contact options. It offers a smooth user experience with elegant design, scroll animations, and a modern UI.',
+      technologies: [ 'React', 'Tailwind CSS'],
+      liveUrl: 'https://estate-by-parth.vercel.app/',
+      githubUrl: 'https://github.com/Parthparmar57/Estate-by-parth',
+      date: '2025',
+      category: 'Frontend',
+    },
   ];
 
   return (
