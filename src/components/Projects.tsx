@@ -11,7 +11,7 @@ const Projects = () => {
       liveUrl: 'https://skillswap-ten-kappa.vercel.app/',
       githubUrl: 'https://github.com/Parthparmar57/odoo_hackathon_25',
       date: '2025',
-      category: 'MERN stack',
+      category: 'Portfolio',
     },
     {
       title: 'Hospital Appoinment Booking App',
@@ -20,7 +20,7 @@ const Projects = () => {
       liveUrl: 'https://hospital-appoinment-booking.vercel.app/',
       githubUrl: 'https://github.com/Parthparmar57/hospital-appoinment-booking',
       date: '2025',
-      category: 'MERN stack',
+      category: 'Portfolio',
     },
     {
       title: 'AI chatbot',
@@ -29,7 +29,7 @@ const Projects = () => {
       liveUrl: 'https://ai-chatbot-5ix7.vercel.app/',
       githubUrl: 'https://github.com/Parthparmar57/Ai_chatbot',
       date: '2025',
-      category: 'AI ML',
+      category: 'Portfolio',
     },
     {
       title: 'Password Generator',
@@ -38,7 +38,7 @@ const Projects = () => {
       liveUrl: 'https://password-generator-react-3uui.vercel.app/',
       githubUrl: 'https://github.com/Parthparmar57/password-generator-react',
       date: '2025',
-      category: 'Frontend',
+      category: 'Portfolio',
     },
     {
       title: 'Real EState Website',
@@ -46,6 +46,15 @@ const Projects = () => {
       technologies: [ 'React', 'Tailwind CSS'],
       liveUrl: 'https://estate-by-parth.vercel.app/',
       githubUrl: 'https://github.com/Parthparmar57/Estate-by-parth',
+      date: '2025',
+      category: 'Portfolio',
+    },
+    {
+      title: 'My Portfolio Website',
+      description: 'create a personal portfolio website using React and Tailwind CSS to showcase my projects, skills, and experience. The website features a clean and modern design with smooth scrolling, responsive layouts, and interactive elements to engage visitors and highlight my work effectively.',
+      technologies: [ 'React', 'Tailwind CSS',' Framer Motion'],
+      liveUrl: 'https://my-portfolio-parth.vercel.app',
+      githubUrl: 'https://github.com/Parthparmar57/my-portfolio',
       date: '2025',
       category: 'Frontend',
     },
@@ -63,10 +72,10 @@ const Projects = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div className="text-center mb-16" initial={{ y: 40, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ delay: 0.2, duration: 0.7 }}>
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Featured Projects
+            Portfolio Projects
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A showcase of my recent work and creative solutions
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            A showcase of my portfolio projects and creative solutions
           </p>
         </motion.div>
 
